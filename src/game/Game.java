@@ -32,8 +32,8 @@ public class Game implements Runnable{
     private void init(){
         w = new Window("Conway's Game of Life", 600, 400);
         tileSize = 16;
-        int gridWidth = w.getWidth()/tileSize-1;
-        int gridHeight = w.getHeight()/tileSize-1;
+        int gridWidth = (w.getWidth()/tileSize)-1;
+        int gridHeight = (w.getHeight()/tileSize)-1;
         grid = new Grid(gridWidth,gridHeight,tileSize);
     }
     
@@ -41,7 +41,7 @@ public class Game implements Runnable{
     public void run() {
         init();
         //specify an (updates per seconds) rate that can be changed.
-        ups = 2;
+        ups = 5;
         timeForUpdate = 1000/ups;
         double lastTime = System.currentTimeMillis();
         double now = System.currentTimeMillis();
