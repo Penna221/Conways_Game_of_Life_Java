@@ -18,6 +18,7 @@ public class Game implements Runnable{
     private BufferStrategy bs;
     private Graphics g;
     
+    //Created from Launcher
     public Game(){}
     public synchronized void start(){
         if(running){
@@ -39,6 +40,7 @@ public class Game implements Runnable{
         State.setState(State.menuState);
     }
     
+    //Game loop
     @Override
     public void run() {
         init();
@@ -63,6 +65,7 @@ public class Game implements Runnable{
         }
 
     }
+    //Not used?
     public static void updateUPS(int newUPS){
         ups = newUPS;
         if(ups == 0){
@@ -70,12 +73,13 @@ public class Game implements Runnable{
         }
         timeForUpdate = 1000/ups;
     }
+    //Update everything
     public void update(){
         if(State.getState()!=null){
             State.getState().update();
         }
     }
-    
+    //Draw everything on canvas
     public void render(){
         bs = w.getCanvas().getBufferStrategy();
         if(bs == null){

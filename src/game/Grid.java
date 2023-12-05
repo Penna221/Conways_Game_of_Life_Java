@@ -9,12 +9,14 @@ public class Grid {
     private static boolean[][] grid;
     private static boolean running;
     private boolean canUpdateSize = false;
+    //Constructor.
     public Grid(int width, int height){
         this.width = width;
         this.height = height;
         generateEmptyGrid();
         
     }
+    //User can resize the canvas with this function.
     public void resize(){
         Thread t = new Thread(){
             public void run(){
@@ -32,6 +34,7 @@ public class Grid {
         };
         t.start();
     }
+    //Set cell in grid alive
     public static void birth(int x, int y){
         int xx = x/tileSize;
         int yy = y/tileSize;
@@ -42,6 +45,7 @@ public class Grid {
 
         }
     }
+    //Set cell in grid dead.
     public static void death(int x, int y){
         int xx = x/tileSize;
         int yy = y/tileSize;
@@ -52,6 +56,7 @@ public class Grid {
 
         }
     }
+    //initializes the grid with width and height.
     public void generateEmptyGrid(){
         grid = new boolean[width][height];
         for(int y = 0; y < grid[0].length; y++){
@@ -60,13 +65,14 @@ public class Grid {
             }
         }
     }
+    //update grid. This happens Game.ups times a second...
     public void update(){
         if(running){
             grid = updateGrid();
         }
     }    
 
-    //CONTROL RUNNING
+    //CONTROL GAME
     public static void run(){
         running = true;
     }
@@ -77,6 +83,7 @@ public class Grid {
         grid = updateGrid();
     }
 
+    //Helper function for game logic
     private static boolean tryRead(int x, int y) {
 		boolean b = false;
 		try {
@@ -87,6 +94,7 @@ public class Grid {
 		
 		return b;
 	}
+    //Game logic
     private static boolean[][] updateGrid() {
 	
 		int w = grid.length;
@@ -133,10 +141,9 @@ public class Grid {
 				}
 			}
 		}
-		
-		
 		return temp;
 	}
+    //Draw the grid.
     public void render(Graphics g){
 
         //update mousepressing here because this updates as fast as it can.
