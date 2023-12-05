@@ -7,7 +7,10 @@ Checkout more on wikipedia. [Link to article.](https://en.wikipedia.org/wiki/Con
 # How to use
 Clone repository, compile files and run.
 You might want to edit the ups in the Game class.
+main\Launcher.java is the entry point.
 ***
 # What i learned
 I learned that i can make this kind of project happen inside one day. This makes me happy that i can achive something like this in short time.
+I **struggled** a bit with the logic, because i tried to update everything while drawing.
+After i realized that the games logic has to run on steps, everything started to go smoothly.
 ***
