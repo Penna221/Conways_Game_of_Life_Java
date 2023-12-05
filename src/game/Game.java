@@ -15,9 +15,10 @@ public class Game implements Runnable{
     
     private BufferStrategy bs;
     private Graphics g;
-    public Game(){
-
-    }
+    
+    private Grid grid;
+    private int tileSize;
+    public Game(){}
     public synchronized void start(){
         if(running){
             return;
@@ -30,7 +31,12 @@ public class Game implements Runnable{
     //Initialize everything
     private void init(){
         w = new Window("Conway's Game of Life", 600, 400);
+        tileSize = 16;
+        int gridWidth = w.getWidth()/tileSize-1;
+        int gridHeight = w.getHeight()/tileSize-1;
+        grid = new Grid(gridWidth,gridHeight,tileSize);
     }
+    
     @Override
     public void run() {
         init();
@@ -63,7 +69,7 @@ public class Game implements Runnable{
         timeForUpdate = 1000/ups;
     }
     public void update(){
-        System.out.println("Update");
+        grid.update();
     }
     
     public void render(){
@@ -76,6 +82,11 @@ public class Game implements Runnable{
         g.clearRect(0, 0, w.getWidth(), w.getHeight());
         g.setColor(Color.black);
         g.fillRect(0, 0, w.getWidth(), w.getHeight());
+
+        //Draw everything
+        grid.render(g);
+
+
         g.dispose();
         bs.show();
     }
