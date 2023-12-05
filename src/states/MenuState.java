@@ -35,10 +35,11 @@ public class MenuState extends State{
         g.drawString("F6 - STOP", 10, 130);
         g.drawString("F7 - STEP", 10, 160);
         g.drawString("F10 - CLEAR GRID", 10, 190);
-        g.drawString("ESC - Return to Menu",10,220);
+        g.drawString("F11 - FIT GRID IN VIEW", 10, 220);
+        g.drawString("ESC - Return to Menu",10,250);
         g.setColor(new Color(100,0,255));
-        g.drawString("Left click - make cell alive", 10, 250);
-        g.drawString("Right click - make cell dead", 10, 280);
+        g.drawString("Left click - make cell alive", 10, 280);
+        g.drawString("Right click - make cell dead", 10, 310);
         
         //update mouse stuff
         int x = Input.mouseX;

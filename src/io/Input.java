@@ -83,6 +83,10 @@ public class Input implements MouseMotionListener, MouseListener, KeyListener{
             if(State.getState()==State.gameState){
                 GameState.grid.generateEmptyGrid();
             }
+        }else if(key == KeyEvent.VK_F11){
+            if(State.getState()==State.gameState){
+                GameState.grid.resize();
+            }
         }
 
     }

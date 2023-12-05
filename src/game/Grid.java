@@ -8,13 +8,30 @@ public class Grid {
     public static int tileSize = 16;
     private static boolean[][] grid;
     private static boolean running;
+    private boolean canUpdateSize = false;
     public Grid(int width, int height){
         this.width = width;
         this.height = height;
         generateEmptyGrid();
         
     }
-
+    public void resize(){
+        Thread t = new Thread(){
+            public void run(){
+                while(!canUpdateSize){
+                    try {
+                        Thread.sleep(10);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+                width = (Game.w.getWidth()/tileSize)-3;
+                height = (Game.w.getHeight()/tileSize)-5;
+                generateEmptyGrid();
+            }
+        };
+        t.start();
+    }
     public static void birth(int x, int y){
         int xx = x/tileSize;
         int yy = y/tileSize;
@@ -133,7 +150,7 @@ public class Grid {
             death(mouseX, mouseY);
         }
 
-
+        canUpdateSize = false;
         g.setColor(Color.white);
         for(int y = 0; y < grid[0].length; y++){
             for(int x = 0; x < grid.length; x++){
@@ -143,5 +160,6 @@ public class Grid {
                 }
             }
         }
+        canUpdateSize = true;
     }
 }
