@@ -1,34 +1,66 @@
 package game;
 import java.awt.Color;
 import java.awt.Graphics;
+
+import io.Input;
 public class Grid {
     private int width, height;
-    private int tileSize = 16;
-    private boolean[][] grid;
-    public Grid(int width, int height,int tileSize){
+    public static int tileSize = 16;
+    private static boolean[][] grid;
+    private static boolean running;
+    public Grid(int width, int height){
         this.width = width;
         this.height = height;
-        this.tileSize = tileSize;
         generateEmptyGrid();
         
+    }
+
+    public static void birth(int x, int y){
+        int xx = x/tileSize;
+        int yy = y/tileSize;
+        if(xx < 0 || xx > grid.length || yy < 0 || yy > grid[0].length){
+            return;
+        }else{
+            grid[xx][yy] = true;
+
+        }
+    }
+    public static void death(int x, int y){
+        int xx = x/tileSize;
+        int yy = y/tileSize;
+        if(xx < 0 || xx > grid.length || yy < 0 || yy > grid[0].length){
+            return;
+        }else{
+            grid[xx][yy] = false;
+
+        }
     }
     private void generateEmptyGrid(){
         grid = new boolean[width][height];
         for(int y = 0; y < grid[0].length; y++){
             for(int x = 0; x < grid.length; x++){
-                if(y == 5){
-                    grid[x][y] = true;
-                }else{
-                    grid[x][y] = false;
-                    
-                }
+                grid[x][y] = false;  
             }
         }
     }
     public void update(){
-        grid = updateGrid();
+        if(running){
+            grid = updateGrid();
+        }
     }    
-    private boolean tryRead(int x, int y) {
+
+    //CONTROL RUNNING
+    public static void run(){
+        running = true;
+    }
+    public static void stop(){
+        running = false;
+    }
+    public static void step(){
+        grid = updateGrid();
+    }
+
+    private static boolean tryRead(int x, int y) {
 		boolean b = false;
 		try {
 			b = grid[x][y];
@@ -38,7 +70,7 @@ public class Grid {
 		
 		return b;
 	}
-    private boolean[][] updateGrid() {
+    private static boolean[][] updateGrid() {
 	
 		int w = grid.length;
 		int h = grid[0].length;			
@@ -89,6 +121,19 @@ public class Grid {
 		return temp;
 	}
     public void render(Graphics g){
+
+        //update mousepressing here because this updates as fast as it can.
+        int mouseX = Input.mouseX;
+        int mouseY = Input.mouseY;
+
+        if(Input.leftPress){
+            birth(mouseX, mouseY);
+        }
+        if(Input.rightPress){
+            death(mouseX, mouseY);
+        }
+
+
         g.setColor(Color.white);
         for(int y = 0; y < grid[0].length; y++){
             for(int x = 0; x < grid.length; x++){

@@ -1,10 +1,11 @@
 package game;
 
-import window.Window;
-
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
+
+import io.Input;
+import window.Window;
 public class Game implements Runnable{
 
     private Thread thread;
@@ -31,10 +32,15 @@ public class Game implements Runnable{
     //Initialize everything
     private void init(){
         w = new Window("Conway's Game of Life", 600, 400);
+        Input i = new Input();
+        w.getCanvas().addMouseListener(i);
+        w.getCanvas().addMouseMotionListener(i);
+        w.getCanvas().addKeyListener(i);
         tileSize = 16;
+        Grid.tileSize = tileSize;
         int gridWidth = (w.getWidth()/tileSize)-1;
         int gridHeight = (w.getHeight()/tileSize)-1;
-        grid = new Grid(gridWidth,gridHeight,tileSize);
+        grid = new Grid(gridWidth,gridHeight);
     }
     
     @Override
