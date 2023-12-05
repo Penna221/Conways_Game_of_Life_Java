@@ -51,4 +51,7 @@ public class Window {
 		this.height = height;
 		refresh();
     }
+    public Canvas getCanvas(){return canvas;}
+    public int getWidth(){return (int)d.getWidth();}
+    public int getHeight(){return (int)d.getHeight();}
 }

@@ -2,6 +2,9 @@ package main;
 
 import window.Window;
 
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.image.BufferStrategy;
 public class Game implements Runnable{
 
     private Thread thread;
@@ -10,6 +13,8 @@ public class Game implements Runnable{
     public static int ups;
     private static double timeForUpdate;
     
+    private BufferStrategy bs;
+    private Graphics g;
     public Game(){
 
     }
@@ -62,6 +67,16 @@ public class Game implements Runnable{
     }
     
     public void render(){
-        System.out.println("DRAWING.....");
+        bs = w.getCanvas().getBufferStrategy();
+        if(bs == null){
+            w.getCanvas().createBufferStrategy(3);
+            return;
+        }
+        g = bs.getDrawGraphics();
+        g.clearRect(0, 0, w.getWidth(), w.getHeight());
+        g.setColor(Color.black);
+        g.fillRect(0, 0, w.getWidth(), w.getHeight());
+        g.dispose();
+        bs.show();
     }
 }
