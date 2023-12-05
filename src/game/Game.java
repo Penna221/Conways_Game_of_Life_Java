@@ -5,6 +5,7 @@ import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 
 import io.Input;
+import states.State;
 import window.Window;
 public class Game implements Runnable{
 
@@ -17,8 +18,6 @@ public class Game implements Runnable{
     private BufferStrategy bs;
     private Graphics g;
     
-    private Grid grid;
-    private int tileSize;
     public Game(){}
     public synchronized void start(){
         if(running){
@@ -36,18 +35,15 @@ public class Game implements Runnable{
         w.getCanvas().addMouseListener(i);
         w.getCanvas().addMouseMotionListener(i);
         w.getCanvas().addKeyListener(i);
-        tileSize = 16;
-        Grid.tileSize = tileSize;
-        int gridWidth = (w.getWidth()/tileSize)-1;
-        int gridHeight = (w.getHeight()/tileSize)-1;
-        grid = new Grid(gridWidth,gridHeight);
+        State.createStates();
+        State.setState(State.menuState);
     }
     
     @Override
     public void run() {
         init();
         //specify an (updates per seconds) rate that can be changed.
-        ups = 5;
+        ups = 9;
         timeForUpdate = 1000/ups;
         double lastTime = System.currentTimeMillis();
         double now = System.currentTimeMillis();
@@ -75,7 +71,9 @@ public class Game implements Runnable{
         timeForUpdate = 1000/ups;
     }
     public void update(){
-        grid.update();
+        if(State.getState()!=null){
+            State.getState().update();
+        }
     }
     
     public void render(){
@@ -90,8 +88,9 @@ public class Game implements Runnable{
         g.fillRect(0, 0, w.getWidth(), w.getHeight());
 
         //Draw everything
-        grid.render(g);
-
+        if(State.getState()!=null){
+            State.getState().render(g);
+        }
 
         g.dispose();
         bs.show();

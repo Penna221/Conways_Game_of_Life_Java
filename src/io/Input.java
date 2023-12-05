@@ -7,6 +7,9 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
 import game.Grid;
+import states.GameState;
+import states.MenuState;
+import states.State;
 
 
 public class Input implements MouseMotionListener, MouseListener, KeyListener{
@@ -14,7 +17,11 @@ public class Input implements MouseMotionListener, MouseListener, KeyListener{
     public static int mouseX, mouseY;
     public static boolean leftPress, rightPress;
     @Override
-    public void mouseClicked(MouseEvent e) {}
+    public void mouseClicked(MouseEvent e) {
+        if(State.getState() == State.menuState){
+            MenuState.click();
+        }
+    }
     @Override
     public void mousePressed(MouseEvent e) {
         
@@ -68,6 +75,14 @@ public class Input implements MouseMotionListener, MouseListener, KeyListener{
         }else if(key == KeyEvent.VK_F7){
             System.out.println("STEP");
             Grid.step();
+        }else if(key == KeyEvent.VK_ESCAPE){
+            if(State.getState()==State.gameState){
+                State.setState(State.menuState);
+            }
+        }else if(key == KeyEvent.VK_F10){
+            if(State.getState()==State.gameState){
+                GameState.grid.generateEmptyGrid();
+            }
         }
 
     }

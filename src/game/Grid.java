@@ -35,7 +35,7 @@ public class Grid {
 
         }
     }
-    private void generateEmptyGrid(){
+    public void generateEmptyGrid(){
         grid = new boolean[width][height];
         for(int y = 0; y < grid[0].length; y++){
             for(int x = 0; x < grid.length; x++){
